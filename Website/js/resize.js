@@ -54,7 +54,6 @@ function FileUploader(file) {
 
     // Handle Progress
     xhr.upload.addEventListener('progress', function (e) {
-        console.log('progress');
         if (e.loaded <= file.size) {
             const percentComplete = Math.round((e.loaded / e.total) * 100);
             progressBar.style.width = percentComplete + "%";
@@ -96,12 +95,6 @@ function FileUploader(file) {
             // Handle Resize
             resizeDiv.style.display = "block";
             progressDiv.style.display = "none";
-
-            console.log(fileHash);
-            console.log(width);
-            console.log(height);
-
-
 
             widthInput.max = width;
             widthInput.value = width;
@@ -148,7 +141,6 @@ async function handleResize() {
     const url = ResizeUrl + `?file=${fileHash}&width=${widthInput.value}&height=${heightInput.value}`;
     const response = await fetch(url)
     const data = await response.text();
-    console.log(data)
 
     let fileUrl, fileName, fileSize;
     x = data.split(";");
