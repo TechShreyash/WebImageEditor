@@ -31,7 +31,7 @@ def resize_image():
 
     image = resizeImage(fileUrl, height, width, file)
     imageUrl = f"{url}/uploads/{image}"
-    return imageUrl
+    return imageUrl+str((fileUrl, height, width, file))
 
 
 @app.route("/")
