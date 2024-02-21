@@ -113,4 +113,7 @@ app.add_routes(routes)
 
 for route in list(app.router.routes()):
     cors.add(route)
-web.run_app(app)
+
+
+if __name__ == "__main__":  
+    web.run_app(app)
