@@ -20,6 +20,8 @@ const downloadDiv = document.getElementById('download-div');
 const downloadAnchor = document.getElementById('download-anchor');
 const fileNameH4New = document.getElementById('file-name-h4-new');
 const fileSizeH4New = document.getElementById('file-size-h4-new');
+const loadingDiv = document.getElementById('load');
+const resizeAnotherDiv = document.getElementById('resize-another-div');
 
 // Event Listeners
 fileTrigger.addEventListener('click', () => {
@@ -140,6 +142,9 @@ function handleLargeSize(e) {
 }
 
 async function handleResize() {
+    resizeDiv.style.display = "none";
+    loadingDiv.style.display = "block";
+
     const url = ResizeUrl + `?file=${fileHash}&width=${widthInput.value}&height=${heightInput.value}`;
     const response = await fetch(url)
     const data = await response.text();
@@ -158,7 +163,8 @@ async function handleResize() {
     }
 
     downloadDiv.style.display = "block";
-    resizeDiv.style.display = "none";
+    loadingDiv.style.display = "none";
+    resizeAnotherDiv.style.display = "block";
 
     downloadAnchor.href = fileUrl;
     downloadAnchor.download = fileName;
