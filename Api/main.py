@@ -109,10 +109,8 @@ async def index(request):
     return web.Response(text="Working", content_type="text/plain", status=200)
 
 
-if __name__ == "__main__":
-    app.add_routes(routes)
+app.add_routes(routes)
 
-    for route in list(app.router.routes()):
-        cors.add(route)
-
-    web.run_app(app)
+for route in list(app.router.routes()):
+    cors.add(route)
+web.run_app(app)
