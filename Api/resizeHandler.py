@@ -1,12 +1,11 @@
-import requests
+from PIL import Image
 
 
-def resizeImage(fileUrl, height, width, hash):
-    url = f"https://wsrv.nl/?w={width}&h={height}&fit=inside&url={fileUrl}"
-    response = requests.get(url)
-    file = response.content
-
-    with open(f"/tmp/resized{hash}", "wb") as f:
-        f.write(file)
-
-    return f"resized{hash}"
+def resizeImage(max_height, max_width, hash):
+    img = Image.open(f"/tmp/{hash}")
+    width, height = img.size
+    resize_ratio = min(max_width / width, max_height / height)
+    new_width, new_height = int(width * resize_ratio), int(height * resize_ratio)
+    img = img.resize((int(new_width), int(new_width)))
+    img.save(f"/tmp/{hash}")
+    return hash
