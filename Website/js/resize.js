@@ -49,16 +49,25 @@ function FileUploader(file) {
     formData.append("file", file);
     formData.append("Connection", "keep-alive");
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", UploadUrl, true);
-    xhr.send(formData);
 
     // Handle Progress
-    xhr.upload.onprogress = (e) => {
-        const percentComplete = Math.round((e.loaded / e.total) * 100);
-        progressBar.style.width = percentComplete + "%";
-        fileProgressH4.innerHTML = `Uploading ${percentComplete} %`;
-    }
+    xhr.upload.addEventListener('progress', function (e) {
+        console.log('progress');
+        if (e.loaded <= file.size) {
+            const percentComplete = Math.round((e.loaded / e.total) * 100);
+            progressBar.style.width = percentComplete + "%";
+            fileProgressH4.innerHTML = `Uploading ${percentComplete} %`;
+        }
+        else if (e.loaded === file.size) {
+            progressBar.style.width = "100%";
+            fileProgressH4.innerHTML = "Uploaded 100 %";
+        }
 
+
+    });
+
+    xhr.open("POST", UploadUrl, true);
+    xhr.send(formData);
 
     // Handle Errors
     xhr.onerror = (e) => {
@@ -66,6 +75,7 @@ function FileUploader(file) {
         console.log(e);
         mainDiv.style.display = "block";
         progressDiv.style.display = "none";
+
         alert("Error! Upload failed. Can't connect to server.");
         return;
     };
@@ -73,13 +83,14 @@ function FileUploader(file) {
     // Handle Completion
     xhr.onreadystatechange = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
-            progressBar.style.width = "100%";
-            fileProgressH4.innerHTML = "Uploaded 100 %";
             const res = xhr.responseText.split(";");
             fileHash = res[0];
             width = Number(res[1]);
             height = Number(res[2]);
 
+            if (fileHash === '') {
+                return;
+            }
             // Handle Resize
             resizeDiv.style.display = "block";
             progressDiv.style.display = "none";
@@ -104,8 +115,8 @@ function handleFileSelection() {
     try {
         const file = fileInput.files[0];
         if (file) {
-            if (file.size > 15.1 * 1024 * 1024) {
-                alert("File size must be less than 15MB");
+            if (file.size > 4.4 * 1024 * 1024) {
+                alert("File size must be less than 4.4 MB");
                 return;
             }
             FileUploader(file);

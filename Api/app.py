@@ -18,7 +18,7 @@ url = "https://image-editor-api.vercel.app"
 @app.route("/uploads/<file>")
 @cross_origin()
 def tmp_files(file):
-    return send_file(f"/tmp/{file}")
+    return send_file(f"/tmp/{file}",as_attachment=True)
 
 
 @app.route("/resize")
