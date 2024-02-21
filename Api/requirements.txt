@@ -1,0 +1,4 @@
+aiohttp
+aiohttp-cors
+werkzeug
+pillow
