@@ -6,17 +6,23 @@ from fileHandler import allowed_file, get_file_details, get_file_hash
 from werkzeug.utils import secure_filename
 from resizeHandler import resizeImage
 
-app = Flask(__name__)
+from flask_cors import CORS, cross_origin
 
-url = ""
+app = Flask(__name__)
+cors = CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
+
+url = "https://image-editor-api.vercel.app"
 
 
 @app.route("/uploads/<file>")
+@cross_origin()
 def tmp_files(file):
     return send_file(f"tmp/uploads/{file}")
 
 
 @app.route("/resize")
+@cross_origin()
 def resize_image():
     file = request.args.get("file")
     width = request.args.get("width")
@@ -33,6 +39,7 @@ def index():
 
 
 @app.route("/upload", methods=["POST"])
+@cross_origin()
 def upload_file():
     file = request.files["file"]
     filename = file.filename
