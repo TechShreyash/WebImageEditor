@@ -50,6 +50,7 @@ function FileUploader(file) {
 
     // Handle Progress
     xhr.upload.onprogress = (e) => {
+        console.log('progress')
         const percentComplete = Math.round((e.loaded / e.total) * 100);
         progressBar.style.width = percentComplete + "%";
         fileProgressH4.innerHTML = `Uploading ${percentComplete} %`;
