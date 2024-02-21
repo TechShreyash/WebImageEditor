@@ -16,7 +16,7 @@ import os, random
 def get_file_hash():
     while True:
         hash = "".join([random.choice(ascii_letters + digits) for n in range(10)])
-        for i in os.listdir("/tmp/uploads"):
+        for i in os.listdir("../tmp/uploads"):
             if i.startswith(hash):
                 continue
         return hash

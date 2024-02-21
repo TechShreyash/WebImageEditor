@@ -46,7 +46,7 @@ async def upload_file(request):
 
         try:
             with open(
-                os.path.join("/tmp/uploads", hash + "." + extension), "wb"
+                os.path.join("../tmp/uploads", hash + "." + extension), "wb"
             ) as f:
                 while True:
                     chunk = await field.read_chunk()
@@ -62,10 +62,10 @@ async def upload_file(request):
 
         try:
             width, height = get_file_details(
-                os.path.join("/tmp/uploads", hash + "." + extension)
+                os.path.join("../tmp/uploads", hash + "." + extension)
             )
         except Exception as e:
-            os.remove(os.path.join("/tmp/uploads", hash + "." + extension))
+            os.remove(os.path.join("../tmp/uploads", hash + "." + extension))
             return web.Response(
                 text=f"Error getting file details: {str(e)}",
                 status=400,
@@ -83,7 +83,7 @@ async def upload_file(request):
 
 @routes.get("/uploads/{file}")
 async def tmp_files(request):
-    return web.FileResponse(f"/tmp/uploads/{request.match_info['file']}")
+    return web.FileResponse(f"../tmp/uploads/{request.match_info['file']}")
 
 
 @routes.get("/resize")

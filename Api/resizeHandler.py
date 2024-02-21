@@ -6,7 +6,7 @@ def resizeImage(fileUrl, height, width, hash):
     response = requests.get(url)
     file = response.content
 
-    with open(f"/tmp/uploads/resized_{hash}", "wb") as f:
+    with open(f"../tmp/uploads/resized_{hash}", "wb") as f:
         f.write(file)
     
     return f"resized_{hash}"
