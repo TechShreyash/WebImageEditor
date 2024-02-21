@@ -83,7 +83,7 @@ async def upload_file(request):
 
 @routes.get("/uploads/{file}")
 async def tmp_files(request):
-    return web.FileResponse(f"/tmp/uploads/{request.match_info['file']}")
+    return web.FileResponse(f"/tmp/{request.match_info['file']}")
 
 
 @routes.get("/resize")
