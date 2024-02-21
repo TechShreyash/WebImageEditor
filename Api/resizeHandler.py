@@ -3,7 +3,7 @@ import requests
 
 def resizeImage(fileUrl, height, width, hash):
     fileUrl= fileUrl.split('//')[1]
-    url = f"https://wsrv.nl/?url={fileUrl}&w={width}&h={height}"
+    url = f"https://wsrv.nl/?url={fileUrl}&w={width}&h={height}&fit=inside"
     response = requests.get(url)
     file = response.content
 
