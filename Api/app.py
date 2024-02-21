@@ -2,7 +2,7 @@
 
 import os
 from flask import Flask, request, send_file, Response
-from fileHandler import allowed_file, get_file_details, get_file_hash
+from fileHandler import allowed_file, get_file_details, get_file_hash, get_file_size
 from werkzeug.utils import secure_filename
 from resizeHandler import resizeImage
 
@@ -30,7 +30,8 @@ def resize_image():
 
     image = resizeImage(height, width, file)
     imageUrl = f"{url}/uploads/{image}"
-    return imageUrl
+    size = get_file_size(f"/tmp/{image}")
+    return f"{imageUrl};{image};{size}"
 
 
 @app.route("/")

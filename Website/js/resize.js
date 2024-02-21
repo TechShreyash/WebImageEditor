@@ -16,6 +16,10 @@ let height = 0;
 let width = 0;
 let fileHash = "";
 const resizeButtonDiv = document.getElementById('resize-button-div');
+const downloadDiv = document.getElementById('download-div');
+const downloadAnchor = document.getElementById('download-anchor');
+const fileNameH4New = document.getElementById('file-name-h4-new');
+const fileSizeH4New = document.getElementById('file-size-h4-new');
 
 // Event Listeners
 fileTrigger.addEventListener('click', () => {
@@ -50,7 +54,6 @@ function FileUploader(file) {
 
     // Handle Progress
     xhr.upload.onprogress = (e) => {
-        console.log('progress')
         const percentComplete = Math.round((e.loaded / e.total) * 100);
         progressBar.style.width = percentComplete + "%";
         fileProgressH4.innerHTML = `Uploading ${percentComplete} %`;
@@ -70,13 +73,12 @@ function FileUploader(file) {
     // Handle Completion
     xhr.onreadystatechange = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
+            progressBar.style.width = "100%";
+            fileProgressH4.innerHTML = "Uploaded 100 %";
             const res = xhr.responseText.split(";");
-            console.log(res);
             fileHash = res[0];
             width = Number(res[1]);
             height = Number(res[2]);
-            progressBar.style.width = "100%";
-            fileProgressH4.innerHTML = "Uploaded 100 %";
 
             // Handle Resize
             resizeDiv.style.display = "block";
@@ -128,8 +130,28 @@ function handleLargeSize(e) {
 
 async function handleResize() {
     const url = ResizeUrl + `?file=${fileHash}&width=${widthInput.value}&height=${heightInput.value}`;
-    console.log(url);
     const response = await fetch(url)
     const data = await response.text();
-    console.log(data);
+    console.log(data)
+
+    let fileUrl, fileName, fileSize;
+    x = data.split(";");
+    fileUrl = x[0];
+    fileName = x[1];
+    fileSize = Number(x[2]);
+
+    if (fileSize < 1024) {
+        fileSize = (fileSize / (1024)).toFixed(1) + " KB";
+    } else {
+        fileSize = (fileSize / (1024 * 1024)).toFixed(1) + " MB";
+    }
+
+    downloadDiv.style.display = "block";
+    resizeDiv.style.display = "none";
+
+    downloadAnchor.href = fileUrl;
+    downloadAnchor.download = fileName;
+    fileNameH4New.innerHTML = fileName;
+    fileSizeH4New.innerHTML = fileSize;
+
 }

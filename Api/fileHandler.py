@@ -30,3 +30,6 @@ def get_file_details(file):
     height = img.height 
     img.close()
     return width, height
+
+def get_file_size(file):
+    return os.path.getsize(file)/1024 # in KB

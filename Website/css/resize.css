@@ -169,3 +169,8 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     appearance: textfield;
 }
+
+.file-download-btn{
+    background-color: #6e99f3;
+}
+.download-div a {text-decoration: none;}
