@@ -4,7 +4,7 @@ import os
 from flask import Flask, request, send_file, Response
 from fileHandler import allowed_file, get_file_details, get_file_hash
 from werkzeug.utils import secure_filename
-from resizeHandler import resizeImage
+from resizeHandler import resizeImage, test
 
 from flask_cors import CORS, cross_origin
 
@@ -36,6 +36,7 @@ def resize_image():
 
 @app.route("/")
 def index():
+    test()
     return str(os.listdir("/tmp"))
     return "Working"
 
