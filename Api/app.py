@@ -18,7 +18,7 @@ url = "https://image-editor-api.vercel.app"
 @app.route("/uploads/<file>")
 @cross_origin()
 def tmp_files(file):
-    return send_file(f"../tmp/uploads/{file}")
+    return send_file(f"/tmp/uploads/{file}")
 
 
 @app.route("/resize")
@@ -35,6 +35,7 @@ def resize_image():
 
 @app.route("/")
 def index():
+    os
     return "Working"
 
 
@@ -49,12 +50,12 @@ def upload_file():
         extension = filename.rsplit(".", 1)[1]
         hash = get_file_hash()
 
-        file.save(f"../tmp/uploads/{hash}.{extension}")
+        file.save(f"/tmp/uploads/{hash}.{extension}")
 
         try:
-            width, height = get_file_details(f"../tmp/uploads/{hash}.{extension}")
+            width, height = get_file_details(f"/tmp/uploads/{hash}.{extension}")
         except Exception as e:
-            os.remove(f"../tmp/uploads/{hash}.{extension}")
+            os.remove(f"/tmp/uploads/{hash}.{extension}")
             return Response(
                 f"Error getting file details: {str(e)}",
                 status=400,
