@@ -1,0 +1,23 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "/Api/app.py",
+            "use": "@vercel/python"
+        },        
+        {
+            "src": "/Website/resize.html",
+            "use": "@vercel/static-build"
+          }
+    ],
+    "routes": [
+        {
+            "src": "/api/.*",
+            "dest": "/Api/app.py"
+        },
+        {
+            "src": "/resize.html",
+            "dest": "/Website/resize.html"
+        }
+    ]
+}
