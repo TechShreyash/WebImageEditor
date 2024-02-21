@@ -36,7 +36,7 @@ def resize_image():
 
 @app.route("/")
 def index():
-    test()
+    resizeImage('https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg',500,500,'test')
     return str(os.listdir("/tmp"))
     return "Working"
 
