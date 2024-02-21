@@ -2,6 +2,8 @@ from PIL import Image
 
 
 def resizeImage(max_height, max_width, hash):
+    max_height = int(max_height)
+    max_width = int(max_width)
     img = Image.open(f"/tmp/{hash}")
     width, height = img.size
     resize_ratio = min(max_width / width, max_height / height)
