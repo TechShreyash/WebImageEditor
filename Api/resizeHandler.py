@@ -2,7 +2,7 @@ import requests
 
 
 def resizeImage(fileUrl, height, width, hash):
-    url = f"https://wsrv.nl/?url={fileUrl}&w={width}&h={height}"
+    url = f"https://proxy.techzbots1.workers.dev/?u=https://wsrv.nl/?url={fileUrl}&w={width}&h={height}"
     response = requests.get(url)
     file = response.content
     return file
