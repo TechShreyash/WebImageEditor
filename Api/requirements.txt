@@ -3,3 +3,4 @@ aiohttp-cors
 werkzeug
 pillow
 requests
+flask

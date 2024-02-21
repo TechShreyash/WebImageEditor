@@ -1,0 +1,60 @@
+# demo flask app
+
+import os
+from flask import Flask, request, send_file, Response
+from fileHandler import allowed_file, get_file_details, get_file_hash
+from werkzeug.utils import secure_filename
+from resizeHandler import resizeImage
+
+app = Flask(__name__)
+
+url = ""
+
+
+@app.route("/uploads/<file>")
+def tmp_files(file):
+    return send_file(f"tmp/uploads/{file}")
+
+
+@app.route("/resize")
+def resize_image():
+    file = request.args.get("file")
+    width = request.args.get("width")
+    height = request.args.get("height")
+    fileUrl = f"{url}/uploads/{file}"
+    image = resizeImage(fileUrl, height, width, file)
+    imageUrl = f"{url}/uploads/{image}"
+    return imageUrl
+
+
+@app.route("/")
+def index():
+    return "Working"
+
+
+@app.route("/upload", methods=["POST"])
+def upload_file():
+    file = request.files["file"]
+    filename = file.filename
+
+    if allowed_file(filename):
+        filename = secure_filename(filename)
+        extension = filename.rsplit(".", 1)[1]
+        hash = get_file_hash()
+
+        file.save(f"tmp/uploads/{hash}.{extension}")
+
+        try:
+            width, height = get_file_details(f"tmp/uploads/{hash}.{extension}")
+        except Exception as e:
+            os.remove(f"tmp/uploads/{hash}.{extension}")
+            return Response(
+                f"Error getting file details: {str(e)}",
+                status=400,
+                content_type="text/plain",
+            )
+
+        text = f"{hash}.{extension};{width};{height}"
+        return Response(text, content_type="text/plain", status=200)
+    else:
+        return Response("File type not allowed", status=400, content_type="text/plain")
