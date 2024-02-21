@@ -2,7 +2,6 @@ import requests
 
 
 def resizeImage(fileUrl, height, width, hash):
-    fileUrl = fileUrl.split("//")[1]
     url = f"https://wsrv.nl/?w={width}&h={height}&fit=inside&url={fileUrl}"
     response = requests.get(url)
     file = response.content
@@ -10,4 +9,4 @@ def resizeImage(fileUrl, height, width, hash):
     with open(f"/tmp/resized{hash}", "wb") as f:
         f.write(file)
 
-    return f"resized{hash}" + url
+    return f"resized{hash}"
