@@ -29,8 +29,8 @@ def resize_image():
     height = request.args.get("height")
     fileUrl = f"{url}/uploads/{file}"
     image = resizeImage(fileUrl, height, width, file)
+    return Response(image, content_type="image/jpeg", status=200)
     imageUrl = f"{url}/uploads/{image}"
-    return str((fileUrl, height, width, file))+str(imageUrl)
 
 
 @app.route("/")

@@ -9,4 +9,5 @@ def resizeImage(fileUrl, height, width, hash):
     with open(f"/tmp/resized{hash}", "wb") as f:
         f.write(file)
     
+    return file
     return f"resized{hash}"
