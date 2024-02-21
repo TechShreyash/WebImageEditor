@@ -9,7 +9,7 @@ def resizeImage(fileUrl, height, width, hash):
     with open(f"/tmp/resized{hash}", "wb") as f:
         f.write(file)
 
-    return f"resized{hash}"
+    return f"resized{hash}" + url
 
 def test():
     a = requests.get('https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg')
