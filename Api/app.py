@@ -29,13 +29,13 @@ def resize_image():
     height = request.args.get("height")
     fileUrl = f"{url}/uploads/{file}"
     image = resizeImage(fileUrl, height, width, file)
-    return Response(image, content_type="image/jpeg", status=200)
     imageUrl = f"{url}/uploads/{image}"
+    return imageUrl
 
 
 @app.route("/")
 def index():
-    os
+    return str(os.listdir("/tmp"))
     return "Working"
 
 
